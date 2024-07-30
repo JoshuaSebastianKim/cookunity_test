@@ -2,9 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import * as Joi from 'joi';
+import { GoogleStrategy } from './strategies';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -19,6 +22,7 @@ import { PrismaModule } from './prisma/prisma.module';
         APP_JWT_SECRET: Joi.string().required(),
       }),
     }),
+    AuthModule,
     PassportModule,
     JwtModule.register({
       global: true,
@@ -26,6 +30,6 @@ import { PrismaModule } from './prisma/prisma.module';
     PrismaModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GoogleStrategy, JwtStrategy],
 })
 export class AppModule {}
