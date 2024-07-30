@@ -1,0 +1,23 @@
+{
+  "name": "cookunity_test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^9.8.0",
+    "prettier": "^3.3.3",
+    "tsconfig": "^7.0.0",
+    "turbo": "^2.0.9"
+  }
+}
