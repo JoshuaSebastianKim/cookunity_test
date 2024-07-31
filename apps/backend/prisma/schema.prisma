@@ -2,11 +2,11 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
- 
+
 generator client {
   provider = "prisma-client-js"
 }
- 
+
 model User {
   id            String          @id @default(cuid())
   name          String?
@@ -17,11 +17,11 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -34,33 +34,33 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([provider, providerAccountId])
 }
- 
+
 model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
- 
+
 model VerificationToken {
   identifier String
   token      String
   expires    DateTime
- 
+
   @@id([identifier, token])
 }
- 
+
 // Optional for WebAuthn support
 model Authenticator {
   credentialID         String  @unique
@@ -71,8 +71,49 @@ model Authenticator {
   credentialDeviceType String
   credentialBackedUp   Boolean
   transports           String?
- 
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@id([userId, credentialID])
+}
+
+enum CardType {
+  COLORLESS
+  GRASS
+  FIRE
+  WATER
+  LIGHTNING
+  FIGHTING
+  PSYCHIC
+  DARKNESS
+  METAL
+  DRAGON
+  FAIRY
+}
+
+enum Rarity {
+  COMMON
+  UNCOMMON
+  RARE
+}
+
+model Card {
+  id         String    @id @default(cuid())
+  name       String    @unique
+  info       String
+  healPoints Int
+  type       CardType
+  attacks    Attack[]
+  resistance CardType?
+  weakness   CardType?
+  rarity     Rarity
+}
+
+model Attack {
+  id          String @id
+  name        String
+  description String
+  damage      Int
+  card        Card   @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  cardId      String
 }
