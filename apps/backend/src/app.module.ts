@@ -9,6 +9,11 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { PrismaModule } from './prisma/prisma.module';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
+import { UserModule } from './user/user.module';
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -28,6 +33,13 @@ import { PrismaModule } from './prisma/prisma.module';
       global: true,
     }),
     PrismaModule,
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      include: [CardModule],
+      autoSchemaFile: join(process.cwd(), 'src/graphql-schema/schema.gql'),
+    }),
+    UserModule,
+    CardModule,
   ],
   controllers: [AppController],
   providers: [AppService, GoogleStrategy, JwtStrategy],
