@@ -99,8 +99,8 @@ enum Rarity {
 
 model Card {
   id         String    @id @default(cuid())
-  name       String    @unique
-  info       String
+  name       String
+  info       String?
   healPoints Int
   type       CardType
   attacks    Attack[]
@@ -110,10 +110,10 @@ model Card {
 }
 
 model Attack {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
-  description String
-  damage      Int
-  card        Card   @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  description String?
+  damage      Int?
+  card        Card    @relation(fields: [cardId], references: [id], onDelete: Cascade)
   cardId      String
 }
