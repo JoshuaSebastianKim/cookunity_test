@@ -110,7 +110,7 @@ model Card {
 }
 
 model Attack {
-  id          String @id
+  id          String @id @default(cuid())
   name        String
   description String
   damage      Int
