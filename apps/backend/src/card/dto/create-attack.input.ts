@@ -10,11 +10,11 @@ export class CreateAttackInput {
 
   @IsNotEmpty()
   @IsString()
-  @Field(() => String)
-  description: string;
+  @Field(() => String, { nullable: true })
+  description?: string;
 
   @IsNotEmpty()
   @IsNumber()
-  @Field(() => Int)
-  damage: number;
+  @Field(() => Int, { nullable: true })
+  damage?: number;
 }

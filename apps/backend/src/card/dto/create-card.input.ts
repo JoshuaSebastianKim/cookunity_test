@@ -18,8 +18,8 @@ export class CreateCardInput {
 
   @IsNotEmpty()
   @IsString()
-  @Field(() => String)
-  info: string;
+  @Field(() => String, { nullable: true })
+  info?: string;
 
   @IsNotEmpty()
   @IsNumber()
@@ -38,7 +38,7 @@ export class CreateCardInput {
 
   @IsEnum(CardType)
   @Field(() => CardType, { nullable: true })
-  resistance: CardType;
+  resistance?: CardType;
 
   @IsEnum(CardType)
   @Field(() => CardType, { nullable: true })
