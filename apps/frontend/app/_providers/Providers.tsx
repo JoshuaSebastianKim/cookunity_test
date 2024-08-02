@@ -1,5 +1,6 @@
 "use client";
 
+import ApolloProvider from "./ApolloProvider";
 import AuthContext from "./AuthContext";
 
 interface ProvidersProps {
@@ -7,5 +8,9 @@ interface ProvidersProps {
 }
 
 export default function Providers({ children }: ProvidersProps) {
-  return <AuthContext>{children}</AuthContext>;
+  return (
+    <AuthContext>
+      <ApolloProvider>{children}</ApolloProvider>
+    </AuthContext>
+  );
 }
