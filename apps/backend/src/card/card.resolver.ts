@@ -3,6 +3,7 @@ import { CardService } from './card.service';
 import { Card, PaginatedCard } from './entities/card.entity';
 import { CreateCardInput } from './dto/create-card.input';
 import { UpdateCardInput } from './dto/update-card.input';
+import { CardWhereInput } from 'src/@generated';
 
 @Resolver(() => Card)
 export class CardResolver {
@@ -14,9 +15,14 @@ export class CardResolver {
   }
 
   @Query(() => PaginatedCard, { name: 'cards' })
-  findAll(@Args('page', { type: () => Int }) page: number) {
+  findAll(
+    @Args('page', { type: () => Int }) page: number,
+    @Args('where', { type: () => CardWhereInput, nullable: true })
+    where: CardWhereInput,
+  ) {
     return this.cardService.findAll({
       page,
+      where,
     });
   }
 

@@ -8,9 +8,9 @@ export class Attack {
   @Field(() => String)
   name: string;
 
-  @Field(() => String)
-  description: string;
+  @Field(() => String, { nullable: true })
+  description?: string;
 
-  @Field(() => Int)
-  damage: number;
+  @Field(() => Int, { nullable: true })
+  damage?: number;
 }

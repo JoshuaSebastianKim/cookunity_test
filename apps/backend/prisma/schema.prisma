@@ -7,6 +7,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+generator nestgraphql {
+  provider   = "prisma-nestjs-graphql"
+  output     = "../src/@generated"
+  emitSingle = true
+  emitBlocks = ["inputs"]
+}
+
 model User {
   id            String          @id @default(cuid())
   name          String?

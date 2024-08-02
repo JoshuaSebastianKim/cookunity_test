@@ -40,6 +40,9 @@ export class CardService {
       {
         where,
         orderBy,
+        include: {
+          attacks: true,
+        },
       },
       {
         page,

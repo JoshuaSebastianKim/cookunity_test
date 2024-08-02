@@ -6,8 +6,8 @@ import {
   IsNumber,
   IsString,
 } from 'class-validator';
-import { CardType, Rarity } from '@prisma/client';
 import { CreateAttackInput } from './create-attack.input';
+import { CardType, Rarity } from 'src/@generated';
 
 @InputType()
 export class CreateCardInput {

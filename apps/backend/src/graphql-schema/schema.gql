@@ -5,8 +5,8 @@
 type Attack {
   id: ID!
   name: String!
-  description: String!
-  damage: Int!
+  description: String
+  damage: Int
 }
 
 type Metadata {
@@ -21,7 +21,7 @@ type Metadata {
 type Card {
   id: ID!
   name: String!
-  info: String!
+  info: String
   healPoints: Int!
   attacks: [Attack!]!
   type: CardType!
@@ -58,8 +58,195 @@ type PaginatedCard {
 }
 
 type Query {
-  cards(page: Int!): PaginatedCard!
+  cards(page: Int!, where: CardWhereInput): PaginatedCard!
   card(id: String!): Card!
+}
+
+input CardWhereInput {
+  AND: [CardWhereInput!]
+  OR: [CardWhereInput!]
+  NOT: [CardWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  info: StringNullableFilter
+  healPoints: IntFilter
+  type: EnumCardTypeFilter
+  resistance: EnumCardTypeNullableFilter
+  weakness: EnumCardTypeNullableFilter
+  rarity: EnumRarityFilter
+  attacks: AttackListRelationFilter
+}
+
+input StringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringFilter
+}
+
+enum QueryMode {
+  default
+  insensitive
+}
+
+input NestedStringFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringFilter
+}
+
+input StringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  mode: QueryMode
+  not: NestedStringNullableFilter
+}
+
+input NestedStringNullableFilter {
+  equals: String
+  in: [String!]
+  notIn: [String!]
+  lt: String
+  lte: String
+  gt: String
+  gte: String
+  contains: String
+  startsWith: String
+  endsWith: String
+  not: NestedStringNullableFilter
+}
+
+input IntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input NestedIntFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntFilter
+}
+
+input EnumCardTypeFilter {
+  equals: CardType
+  in: [CardType!]
+  notIn: [CardType!]
+  not: NestedEnumCardTypeFilter
+}
+
+input NestedEnumCardTypeFilter {
+  equals: CardType
+  in: [CardType!]
+  notIn: [CardType!]
+  not: NestedEnumCardTypeFilter
+}
+
+input EnumCardTypeNullableFilter {
+  equals: CardType
+  in: [CardType!]
+  notIn: [CardType!]
+  not: NestedEnumCardTypeNullableFilter
+}
+
+input NestedEnumCardTypeNullableFilter {
+  equals: CardType
+  in: [CardType!]
+  notIn: [CardType!]
+  not: NestedEnumCardTypeNullableFilter
+}
+
+input EnumRarityFilter {
+  equals: Rarity
+  in: [Rarity!]
+  notIn: [Rarity!]
+  not: NestedEnumRarityFilter
+}
+
+input NestedEnumRarityFilter {
+  equals: Rarity
+  in: [Rarity!]
+  notIn: [Rarity!]
+  not: NestedEnumRarityFilter
+}
+
+input AttackListRelationFilter {
+  every: AttackWhereInput
+  some: AttackWhereInput
+  none: AttackWhereInput
+}
+
+input AttackWhereInput {
+  AND: [AttackWhereInput!]
+  OR: [AttackWhereInput!]
+  NOT: [AttackWhereInput!]
+  id: StringFilter
+  name: StringFilter
+  description: StringNullableFilter
+  damage: IntNullableFilter
+  cardId: StringFilter
+  card: CardRelationFilter
+}
+
+input IntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input NestedIntNullableFilter {
+  equals: Int
+  in: [Int!]
+  notIn: [Int!]
+  lt: Int
+  lte: Int
+  gt: Int
+  gte: Int
+  not: NestedIntNullableFilter
+}
+
+input CardRelationFilter {
+  is: CardWhereInput
+  isNot: CardWhereInput
 }
 
 type Mutation {
@@ -70,7 +257,7 @@ type Mutation {
 
 input CreateCardInput {
   name: String!
-  info: String!
+  info: String
   healPoints: Int!
   attacks: [CreateAttackInput!]!
   type: CardType!
@@ -81,8 +268,8 @@ input CreateCardInput {
 
 input CreateAttackInput {
   name: String!
-  description: String!
-  damage: Int!
+  description: String
+  damage: Int
 }
 
 input UpdateCardInput {

@@ -1,4 +1,4 @@
-import { CardType, Rarity } from '@prisma/client';
+import { CardType, Rarity } from 'src/@generated';
 import { CreateCardInput } from 'src/card/dto/create-card.input';
 
 export const cardsData: CreateCardInput[] = [

@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int, ID, registerEnumType } from '@nestjs/graphql';
 import { Attack } from './attack.entity';
-import { CardType, Rarity } from '@prisma/client';
 import { Paginated } from 'src/prisma/entities/paginated.entity';
+import { CardType, Rarity } from 'src/@generated';
 
 registerEnumType(CardType, {
   name: 'CardType',
@@ -21,8 +21,8 @@ export class Card {
   @Field(() => String)
   name: string;
 
-  @Field(() => String)
-  info: string;
+  @Field(() => String, { nullable: true })
+  info?: string;
 
   @Field(() => Int)
   healPoints: number;
@@ -34,10 +34,10 @@ export class Card {
   type: CardType;
 
   @Field(() => CardType, { nullable: true })
-  resistance: CardType;
+  resistance?: CardType;
 
   @Field(() => CardType, { nullable: true })
-  weakness: CardType;
+  weakness?: CardType;
 
   @Field(() => Rarity)
   rarity: Rarity;
