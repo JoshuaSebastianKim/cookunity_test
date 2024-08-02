@@ -114,6 +114,11 @@ model Card {
   resistance CardType?
   weakness   CardType?
   rarity     Rarity
+
+  @@index([type])
+  @@index([resistance])
+  @@index([weakness])
+  @@index([rarity])
 }
 
 model Attack {
