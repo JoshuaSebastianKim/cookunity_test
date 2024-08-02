@@ -43,6 +43,7 @@ export const cardsData: CreateCardInput[] = [
   },
   {
     name: 'Onix',
+    info: `Rock Snake Pokemon. Length: 28' 10", Wieght: 463 lbs.`,
     healPoints: 90,
     type: CardType.FIGHTING,
     weakness: CardType.GRASS,
@@ -64,6 +65,7 @@ export const cardsData: CreateCardInput[] = [
   },
   {
     name: 'Feraligatr',
+    info: `NO. 0160 Big Jaw Pokemon HT: 7' 7" WT: 195.8 lbs.`,
     healPoints: 180,
     type: CardType.WATER,
     weakness: CardType.LIGHTNING,
@@ -79,6 +81,7 @@ export const cardsData: CreateCardInput[] = [
   },
   {
     name: 'Sneasel',
+    info: `NO. 0215. Sharp Claw Pokemon. HT: 2' 11" WT: 61.7 lbs.`,
     healPoints: 70,
     type: CardType.DARKNESS,
     weakness: CardType.GRASS,
@@ -92,6 +95,7 @@ export const cardsData: CreateCardInput[] = [
   },
   {
     name: 'Scizor',
+    info: `NO. 212 Pince Pokemon HT: 5' 11" WT: 260.1 lbs.`,
     healPoints: 120,
     type: CardType.METAL,
     resistance: CardType.PSYCHIC,
