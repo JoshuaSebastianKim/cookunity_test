@@ -31,8 +31,8 @@ export class CardService {
     orderBy,
     page,
   }: {
-    where?: Prisma.UserWhereInput;
-    orderBy?: Prisma.UserOrderByWithRelationInput;
+    where?: Prisma.CardWhereInput;
+    orderBy?: Prisma.CardOrderByWithRelationInput;
     page?: number;
   }): Promise<PaginatedResult<Card>> {
     return paginate(
