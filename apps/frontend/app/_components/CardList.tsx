@@ -21,21 +21,35 @@ export default function CardList() {
   const { error, loading, cards } = useContext(CardContext);
 
   if (error) {
-    return "Error";
+    throw error;
   }
 
   if (loading) {
-    return "Loading...";
+    return (
+      <div className="min-h-80 flex justify-center items-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (!cards?.length) {
+    return (
+      <div className="min-h-80 flex justify-center items-center">
+        No results
+      </div>
+    );
   }
 
   return (
     <div className="grid grid-cols-4 gap-6 items-start">
-      {cards?.map((card) => (
+      {cards?.map((card, index) => (
         <div
           key={card.id}
-          className="border-4 border-black rounded p-2 bg-white transition-all hover:-translate-y-2 hover:shadow cursor-pointer"
+          className="border-4 border-black rounded p-2 bg-white transition-all hover:-translate-y-2 hover:shadow cursor-pointer opacity-0 animate-fade"
           style={{
             borderColor: typeColor[card.type],
+            animationDelay: `${50 * index}ms`,
+            animationFillMode: "forwards",
           }}
         >
           <div className="flex items-center">
