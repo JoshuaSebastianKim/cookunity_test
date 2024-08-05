@@ -9,7 +9,7 @@ import {
 } from 'src/prisma/paginator';
 import { Card, Prisma } from '@prisma/client';
 
-const paginate: PaginateFunction = paginator({ perPage: 10 });
+const paginate: PaginateFunction = paginator({ perPage: 12 });
 
 @Injectable()
 export class CardService {
