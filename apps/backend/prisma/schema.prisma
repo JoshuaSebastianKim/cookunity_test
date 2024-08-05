@@ -115,6 +115,7 @@ model Card {
   weakness   CardType?
   rarity     Rarity
 
+  @@index([name])
   @@index([type])
   @@index([resistance])
   @@index([weakness])
