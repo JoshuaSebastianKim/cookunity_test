@@ -97,9 +97,6 @@ export function CardProvider({ children }: { children: React.ReactNode }) {
     },
   });
 
-  console.log("cards", data?.cards.data);
-  console.log("meta", data?.cards.meta);
-
   return (
     <CardContext.Provider
       value={{
