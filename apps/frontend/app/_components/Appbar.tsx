@@ -3,7 +3,10 @@ import SignoutButton from "./SignoutButton";
 
 const Appbar = () => {
   return (
-    <header className="flex justify-end gap-4 p-4 bg-gradient-to-b from-blue-900 to-black shadow">
+    <header className="flex justify-end gap-4 p-4 shadow">
+      <h1 className="text-2xl font-bold leading-7 text-gray-900 mr-auto">
+        Pokémon App
+      </h1>
       <SignoutButton />
     </header>
   );

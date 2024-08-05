@@ -6,7 +6,7 @@ const SignoutButton = () => {
   const { data: session } = useSession();
   if (session?.user) {
     return (
-      <div className="flex gap-4 ml-auto">
+      <div className="flex gap-4 ml-auto items-center">
         <p className="text-sm tracking-tight text-sky-400">
           {session.user.name}
         </p>

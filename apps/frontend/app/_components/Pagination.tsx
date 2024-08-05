@@ -1,6 +1,7 @@
 // Implemented from this article https://www.freecodecamp.org/news/build-a-custom-pagination-component-in-react/
 
 import { useMemo } from "react";
+import classnames from "classnames";
 
 const DOTS = "...";
 
@@ -59,8 +60,8 @@ export const usePagination = ({
     	Case 2: No left dots to show, but rights dots to be shown
     */
     if (!shouldShowLeftDots && shouldShowRightDots) {
-      let leftItemCount = 3 + 2 * siblingCount;
-      let leftRange = range(1, leftItemCount);
+      const leftItemCount = 3 + 2 * siblingCount;
+      const leftRange = range(1, leftItemCount);
 
       return [...leftRange, DOTS, totalPageCount];
     }
@@ -69,8 +70,8 @@ export const usePagination = ({
     	Case 3: No right dots to show, but left dots to be shown
     */
     if (shouldShowLeftDots && !shouldShowRightDots) {
-      let rightItemCount = 3 + 2 * siblingCount;
-      let rightRange = range(
+      const rightItemCount = 3 + 2 * siblingCount;
+      const rightRange = range(
         totalPageCount - rightItemCount + 1,
         totalPageCount
       );
@@ -81,7 +82,7 @@ export const usePagination = ({
     	Case 4: Both left and right dots to be shown
     */
     if (shouldShowLeftDots && shouldShowRightDots) {
-      let middleRange = range(leftSiblingIndex, rightSiblingIndex);
+      const middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
 
@@ -124,29 +125,86 @@ export default function Pagination({
     onPageChange(currentPage - 1);
   };
 
-  return (
-    <ul>
-      {/* Left navigation arrow */}
-      <li onClick={onPrevious}>
-        <div className="arrow left" />
-      </li>
-      {paginationRange.map((pageNumber) => {
-        // If the pageItem is a DOT, render the DOTS unicode character
-        if (pageNumber === DOTS) {
-          return <li key={pageNumber}>&#8230;</li>;
-        }
+  const lastPage = paginationRange[paginationRange.length - 1];
 
-        // Render our Page Pills
-        return (
-          <li key={pageNumber} onClick={() => onPageChange(Number(pageNumber))}>
-            {pageNumber}
-          </li>
-        );
-      })}
-      {/*  Right Navigation arrow */}
-      <li onClick={onNext}>
-        <div className="arrow right" />
-      </li>
-    </ul>
+  return (
+    <div className="mt-4 flex justify-center">
+      <ul className="flex gap-2 select-none">
+        {/* Left navigation arrow */}
+        <li
+          onClick={onPrevious}
+          className={classnames(
+            "cursor-pointer transition-all active:-translate-y-1",
+            {
+              "pointer-events-none": currentPage === 1,
+              "opacity-50": currentPage === 1,
+            }
+          )}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
+            />
+          </svg>
+        </li>
+        {paginationRange.map((pageNumber, index) => {
+          // If the pageItem is a DOT, render the DOTS unicode character
+          if (pageNumber === DOTS) {
+            return <li key={`${pageNumber}-${index}`}>&#8230;</li>;
+          }
+
+          // Render our Page Pills
+          return (
+            <li
+              key={pageNumber}
+              onClick={() => onPageChange(Number(pageNumber))}
+              className={classnames(
+                "cursor-pointer size-6 flex justify-center items-center rounded-full text-sm transition-all active:-translate-y-1",
+                {
+                  "bg-gray-300": currentPage === pageNumber,
+                }
+              )}
+            >
+              {pageNumber}
+            </li>
+          );
+        })}
+        {/*  Right Navigation arrow */}
+        <li
+          onClick={onNext}
+          className={classnames(
+            "cursor-pointer transition-all active:-translate-y-1",
+            {
+              "pointer-events-none": currentPage === lastPage,
+              "opacity-50": currentPage === lastPage,
+            }
+          )}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="size-6"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+            />
+          </svg>
+        </li>
+      </ul>
+    </div>
   );
 }

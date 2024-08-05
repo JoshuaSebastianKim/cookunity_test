@@ -1,4 +1,4 @@
-import { Card, CardType, Prisma } from "@prisma/client";
+import { Attack, Card, CardType, Prisma } from "@prisma/client";
 import { createContext, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
 import { ApolloError, gql, useQuery } from "@apollo/client";
@@ -33,6 +33,8 @@ const GET_CARDS = gql`
   }
 `;
 
+type CardWithAttacks = Card & { attacks: Attack[] };
+
 export const CardContext = createContext<{
   handleSetPage: (page: number) => void;
   handleSetTypeFilter: (typeFilter: CardType) => void;
@@ -40,7 +42,7 @@ export const CardContext = createContext<{
   typeFilter?: CardType;
   error?: ApolloError;
   loading?: boolean;
-  cards?: Card[];
+  cards?: CardWithAttacks[];
   meta?: Metadata;
   page: number;
 }>({
@@ -87,7 +89,7 @@ export function CardProvider({ children }: { children: React.ReactNode }) {
   }, [textFilter, typeFilter]);
 
   const { error, loading, data } = useQuery<{
-    cards: PaginatedResult<Card>;
+    cards: PaginatedResult<CardWithAttacks>;
   }>(GET_CARDS, {
     variables: {
       page,
