@@ -1,5 +1,5 @@
-import { CardType, Rarity } from 'src/@generated';
-import { CreateCardInput } from 'src/card/dto/create-card.input';
+import { CardType, Rarity } from '../src/@generated';
+import { CreateCardInput } from '../src/card/dto/create-card.input';
 
 export const cardsData: CreateCardInput[] = [
   {
