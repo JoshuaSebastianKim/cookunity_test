@@ -2,6 +2,7 @@
 
 import ApolloProvider from "./ApolloProvider";
 import AuthContext from "./AuthContext";
+import { CardProvider } from "./CardProvider";
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -10,7 +11,9 @@ interface ProvidersProps {
 export default function Providers({ children }: ProvidersProps) {
   return (
     <AuthContext>
-      <ApolloProvider>{children}</ApolloProvider>
+      <ApolloProvider>
+        <CardProvider>{children}</CardProvider>
+      </ApolloProvider>
     </AuthContext>
   );
 }
