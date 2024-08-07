@@ -5,11 +5,19 @@ import { CardService } from './card.service';
 export const WEAKNESS_MULTIPLIER = 2;
 export const RESIST_AMOUNT = 30;
 
+type CardWithCurrentHP = Card & {
+  currentHealPoints?: number;
+};
+
 @Injectable()
 export class BattleService {
   constructor(private cardService: CardService) {}
 
   static battle(attacker: Card, attack: Attack, defender: Card) {
+    const defenderCopy = {
+      ...defender,
+      currentHealPoints: defender.healPoints,
+    } as CardWithCurrentHP;
     const hasWeakness =
       defender.weakness && attacker.type === defender.weakness;
     const hasResistance =
@@ -25,11 +33,14 @@ export class BattleService {
     }
 
     // Apply damage to defender
-    defender.healPoints = Math.max(0, defender.healPoints - finalDamage);
+    defenderCopy.currentHealPoints = Math.max(
+      0,
+      defender.healPoints - finalDamage,
+    );
 
     return {
       attacker,
-      defender,
+      defender: defenderCopy,
     };
   }
 

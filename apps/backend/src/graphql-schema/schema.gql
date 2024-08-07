@@ -23,6 +23,7 @@ type Card {
   name: String!
   info: String
   healPoints: Int!
+  currentHealPoints: Int
   attacks: [Attack!]!
   type: CardType!
   resistance: CardType

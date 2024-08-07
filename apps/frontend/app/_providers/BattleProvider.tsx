@@ -34,6 +34,7 @@ const SIMULATE_BATTLE = gql`
         name
         info
         healPoints
+        currentHealPoints
         type
         resistance
         weakness

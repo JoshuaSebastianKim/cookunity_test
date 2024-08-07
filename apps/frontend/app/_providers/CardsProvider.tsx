@@ -34,7 +34,10 @@ const GET_CARDS = gql`
   }
 `;
 
-export type CardWithAttacks = Card & { attacks: Attack[] };
+export type CardWithAttacks = Card & {
+  attacks: Attack[];
+  currentHealPoints?: number;
+};
 
 export const CardsContext = createContext<{
   handleSetPage: (page: number) => void;

@@ -27,6 +27,9 @@ export class Card {
   @Field(() => Int)
   healPoints: number;
 
+  @Field(() => Int, { nullable: true })
+  currentHealPoints?: number;
+
   @Field(() => [Attack])
   attacks: Attack[];
 
