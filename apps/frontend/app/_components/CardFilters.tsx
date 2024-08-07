@@ -1,11 +1,11 @@
 "use client";
 
 import { useContext } from "react";
-import { CardContext } from "../_providers/CardProvider";
+import { CardsContext } from "../_providers/CardsProvider";
 import { CardType } from "@prisma/client";
 
 export default function CardFilters() {
-  const { handleSetTextFilter, handleSetTypeFilter } = useContext(CardContext);
+  const { handleSetTextFilter, handleSetTypeFilter } = useContext(CardsContext);
 
   return (
     <div className="flex justify-end gap-4 text-black">
