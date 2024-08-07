@@ -14,7 +14,7 @@ const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
 });
 
-let sessionCache: Session;
+export let session: Session | null;
 
 export default function ApolloProvider({
   children,
@@ -23,10 +23,7 @@ export default function ApolloProvider({
 }) {
   const client = useMemo(() => {
     const authMiddleware = setContext(async (_operation, { headers }) => {
-      let session;
-      if (sessionCache) {
-        session = sessionCache;
-      } else {
+      if (!session) {
         session = await getSession();
       }
 
