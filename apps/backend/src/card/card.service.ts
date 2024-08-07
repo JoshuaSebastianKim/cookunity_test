@@ -82,4 +82,10 @@ export class CardService {
       },
     });
   }
+
+  async findAttack(id: string) {
+    return this.prisma.attack.findUnique({
+      where: { id },
+    });
+  }
 }

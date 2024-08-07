@@ -57,9 +57,15 @@ type PaginatedCard {
   meta: Metadata
 }
 
+type Battle {
+  attacker: Card!
+  defender: Card!
+}
+
 type Query {
   cards(page: Int!, where: CardWhereInput): PaginatedCard!
   card(id: String!): Card!
+  battle(attackerId: String!, attackId: String!, defenderId: String!): Battle!
 }
 
 input CardWhereInput {
