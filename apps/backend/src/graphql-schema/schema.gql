@@ -65,7 +65,7 @@ type Battle {
 type Query {
   cards(page: Int!, where: CardWhereInput): PaginatedCard!
   card(id: String!): Card!
-  battle(attackerId: String!, attackId: String!, defenderId: String!): Battle!
+  battle(attackerId: String!, defenderId: String!, attackId: String): Battle!
 }
 
 input CardWhereInput {

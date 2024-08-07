@@ -23,7 +23,7 @@ export class CardResolver {
   findAll(
     @Args('page', { type: () => Int }) page: number,
     @Args('where', { type: () => CardWhereInput, nullable: true })
-    where: CardWhereInput,
+    where?: CardWhereInput,
   ) {
     return this.cardService.findAll({
       page,
@@ -49,9 +49,9 @@ export class CardResolver {
   @Query(() => Battle, { name: 'battle' })
   battle(
     @Args('attackerId', { type: () => String }) attackerId: string,
-    @Args('attackId', { type: () => String }) attackId: string,
     @Args('defenderId', { type: () => String }) defenderId: string,
+    @Args('attackId', { type: () => String, nullable: true }) attackId?: string,
   ) {
-    return this.battleService.battle(attackerId, attackId, defenderId);
+    return this.battleService.battle(attackerId, defenderId, attackId);
   }
 }

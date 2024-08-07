@@ -33,12 +33,19 @@ export class BattleService {
     };
   }
 
-  async battle(attackerId: string, attackId: string, defenderId: string) {
-    const [attacker, attack, defender] = await Promise.all([
+  async battle(attackerId: string, defenderId: string, attackId?: string) {
+    const [attacker, defender] = await Promise.all([
       this.cardService.findOne(attackerId),
-      this.cardService.findAttack(attackId),
       this.cardService.findOne(defenderId),
     ]);
+    const findCardBestAttack = (card) =>
+      card.attacks.reduce((prev, current) =>
+        prev.damage > current.damage ? prev : current,
+      );
+    // Default attack to best attack if not provided
+    const attack = attackId
+      ? await this.cardService.findAttack(attackId)
+      : findCardBestAttack(attacker);
 
     return BattleService.battle(attacker, attack, defender);
   }
