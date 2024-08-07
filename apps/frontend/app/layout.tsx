@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "./_providers/Providers";
 import Appbar from "./_components/Appbar";
 import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,14 +18,20 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
-      <body className={`${inter.className} min-h-screen`}>
+      <body className={`${inter.className} min-h-screen flex flex-col`}>
         <Providers>
           <Appbar />
-          {session && children}
+          {session ? (
+            children
+          ) : (
+            <div className="flex-1 flex items-center justify-center">
+              Please log in
+            </div>
+          )}
         </Providers>
       </body>
     </html>

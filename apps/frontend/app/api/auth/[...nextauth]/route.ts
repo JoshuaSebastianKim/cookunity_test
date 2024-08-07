@@ -4,10 +4,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
+import { NextAuthOptions } from "next-auth";
 
 const prisma = new PrismaClient();
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -23,6 +24,7 @@ const handler = NextAuth({
   ],
   session: {
     strategy: "jwt",
+    maxAge: 4 * 60 * 60,
   },
   adapter: PrismaAdapter(prisma) as Adapter,
   callbacks: {
@@ -42,6 +44,8 @@ const handler = NextAuth({
       return session;
     },
   },
-});
+} satisfies NextAuthOptions;
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
