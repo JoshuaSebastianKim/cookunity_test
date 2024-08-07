@@ -8,10 +8,13 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { getSession } from "next-auth/react";
+import { Session } from "next-auth";
 
 const httpLink = new HttpLink({
   uri: "http://localhost:3001/graphql",
 });
+
+let sessionCache: Session;
 
 export default function ApolloProvider({
   children,
@@ -20,7 +23,12 @@ export default function ApolloProvider({
 }) {
   const client = useMemo(() => {
     const authMiddleware = setContext(async (_operation, { headers }) => {
-      const session = await getSession();
+      let session;
+      if (sessionCache) {
+        session = sessionCache;
+      } else {
+        session = await getSession();
+      }
 
       return {
         headers: {
