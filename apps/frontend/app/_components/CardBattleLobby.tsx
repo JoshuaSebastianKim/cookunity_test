@@ -7,6 +7,8 @@ import { SelectInstance } from "react-select";
 import Link from "next/link";
 import classNames from "classnames";
 import { AnimatePresence, motion } from "framer-motion";
+import { fadeIn } from "../_animations/fadeIn";
+import Loading from "./Loading";
 
 type Option = {
   value: string;
@@ -15,7 +17,7 @@ type Option = {
 
 export default function CardBattleLobby() {
   const [opponentId, setOpponentId] = useState<string>();
-  const { error, card } = useContext(CardContext);
+  const { error, loading, card } = useContext(CardContext);
 
   const opponentRefs: { [name: string]: RefObject<SelectInstance<Option>> } = {
     opponent: useRef<SelectInstance<Option>>(null),
@@ -41,28 +43,27 @@ export default function CardBattleLobby() {
   };
 
   return (
-    <div className="flex gap-6 items-center">
-      <AnimatePresence mode="popLayout">
+    <AnimatePresence mode="popLayout">
+      {loading && <Loading key="loading" />}
+      <div className="flex gap-6 items-center p-10">
         <motion.div
           key="attacker"
           className="flex-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{
-            opacity: 0,
-          }}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          variants={fadeIn}
         >
           {card && <CardItem card={card} />}
         </motion.div>
         <motion.div
           key="vs"
           className="text-3xl font-bold"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              delay: 0.2,
-            },
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          transition={{
+            delay: 0.2,
           }}
         >
           VS
@@ -70,12 +71,11 @@ export default function CardBattleLobby() {
         <motion.div
           key="defender"
           className="flex-1 flex flex-col gap-2"
-          initial={{ opacity: 0 }}
-          animate={{
-            opacity: 1,
-            transition: {
-              delay: 0.4,
-            },
+          initial="hidden"
+          animate="visible"
+          variants={fadeIn}
+          transition={{
+            delay: 0.4,
           }}
         >
           {card && (
@@ -123,7 +123,7 @@ export default function CardBattleLobby() {
             </>
           )}
         </motion.div>
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   );
 }

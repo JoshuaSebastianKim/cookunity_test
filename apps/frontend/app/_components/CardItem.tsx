@@ -32,7 +32,7 @@ export default function CardItem({ card }: { card: CardWithAttacks }) {
         <div className="font-bold mr-auto">{card.name}</div>
         <div className="font-medium">
           <span className="text-xxs">HP</span>
-          {card.healPoints}
+          <span className="healPoints">{card.healPoints}</span>
         </div>
         <div
           className="ml-1 w-4 h-4 bg-black rounded-full"

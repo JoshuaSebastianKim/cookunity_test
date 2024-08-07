@@ -4,6 +4,9 @@ import { CardsContext } from "../_providers/CardsProvider";
 import Link from "next/link";
 import CardItem from "./CardItem";
 import { AnimatePresence, motion } from "framer-motion";
+import Loading from "./Loading";
+import NoResults from "./NoResults";
+import { fadeIn } from "../_animations/fadeIn";
 
 export default function CardList() {
   const { error, loading, cards } = useContext(CardsContext);
@@ -13,20 +16,19 @@ export default function CardList() {
   }
 
   return (
-    <div className="grid grid-cols-4 gap-6 items-start">
-      <AnimatePresence mode="popLayout">
+    <AnimatePresence mode="popLayout">
+      {loading && <Loading key="loading" />}
+      {!loading && !cards?.length && <NoResults key="no-results" />}
+      <div className="grid grid-cols-4 gap-6 items-start">
         {cards?.map((card, index) => (
           <motion.div
             key={`${card.id}-${index}`}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: 1,
-              transition: {
-                delay: index * 0.03,
-              },
-            }}
-            exit={{
-              opacity: 0,
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={{
+              delay: index * 0.03,
             }}
             whileHover={{
               y: -10,
@@ -37,7 +39,7 @@ export default function CardList() {
             </Link>
           </motion.div>
         ))}
-      </AnimatePresence>
-    </div>
+      </div>
+    </AnimatePresence>
   );
 }
