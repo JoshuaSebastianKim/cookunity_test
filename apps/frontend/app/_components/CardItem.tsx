@@ -14,13 +14,13 @@ const typeColor = {
   FAIRY: "#D685AD",
 };
 
-export default function CardItem({
-  card,
-  index = 0,
-}: {
-  card: CardWithAttacks;
-  index?: number;
-}) {
+const rarityicon = {
+  COMMON: "●",
+  UNCOMMON: "◆",
+  RARE: "★",
+};
+
+export default function CardItem({ card }: { card: CardWithAttacks }) {
   return (
     <div
       className="border-4 border-black rounded p-2 bg-white"
@@ -61,7 +61,7 @@ export default function CardItem({
           </div>
         ))}
       </div>
-      <div className="min-h-4 border-y flex items-center">
+      <div className="min-h-4 border-y flex items-baseline">
         <div className="text-xxs">
           Weakness{" "}
           {card.weakness && (
@@ -86,6 +86,7 @@ export default function CardItem({
             </>
           )}
         </div>
+        <div className="ml-auto text-xs">{rarityicon[card.rarity]}</div>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 "use client";
-
 import { Attack, Card, CardType, Prisma } from "@prisma/client";
 import { createContext, useMemo, useState } from "react";
 import debounce from "lodash.debounce";
@@ -60,14 +59,16 @@ export function CardsProvider({ children }: { children: React.ReactNode }) {
   const handleSetPage = (page: number) => setPage(page);
 
   const [textFilter, setTextFilter] = useState<string>("");
-  const handleSetTextFilter = debounce(
-    setTextFilter,
-    TEXT_FILTER_DEBOUNCE_WAIT
-  );
+  const handleSetTextFilter = debounce((text: string) => {
+    setPage(1);
+    setTextFilter(text);
+  }, TEXT_FILTER_DEBOUNCE_WAIT);
 
   const [typeFilter, setTypeFilter] = useState<CardType>();
-  const handleSetTypeFilter = (typeFilter: CardType) =>
+  const handleSetTypeFilter = (typeFilter: CardType) => {
+    setPage(1);
     setTypeFilter(typeFilter);
+  };
 
   const filters = useMemo(() => {
     const where: Prisma.CardWhereInput = {};

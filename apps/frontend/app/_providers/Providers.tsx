@@ -1,5 +1,4 @@
 "use client";
-
 import ApolloProvider from "./ApolloProvider";
 import AuthContext from "./AuthContext";
 

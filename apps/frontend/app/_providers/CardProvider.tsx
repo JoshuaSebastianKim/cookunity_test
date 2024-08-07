@@ -1,3 +1,4 @@
+"use client";
 import { ApolloError, gql, useQuery } from "@apollo/client";
 import { createContext } from "react";
 import { CardWithAttacks } from "./CardsProvider";

@@ -1,4 +1,3 @@
-"use client";
 import CardBattleLobby from "@/app/_components/CardBattleLobby";
 import { CardProvider } from "@/app/_providers/CardProvider";
 

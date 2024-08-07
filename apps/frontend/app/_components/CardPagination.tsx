@@ -1,5 +1,4 @@
 "use client";
-
 import { useContext } from "react";
 import { CardsContext } from "../_providers/CardsProvider";
 import Pagination from "./Pagination";
