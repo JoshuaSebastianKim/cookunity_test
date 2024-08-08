@@ -6,6 +6,9 @@ import {
 } from './battle.service';
 import { cardsData } from 'prisma/cardData';
 import { Attack, Card, CardType } from '@prisma/client';
+import { CardService } from './card.service';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { ConfigService } from '@nestjs/config';
 
 // Combat list [Attacker vs Defender, OTK: One turn kill]
 const combats: Array<[string, string, boolean]> = [
@@ -22,7 +25,7 @@ describe('BattleService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [BattleService],
+      providers: [BattleService, CardService, PrismaService, ConfigService],
     }).compile();
 
     service = module.get<BattleService>(BattleService);
@@ -49,13 +52,13 @@ describe('BattleService', () => {
         const attack = findCardBestAttack(attacker);
         const defender = findCardByName(defenderName);
         const result = BattleService.battle(attacker, attack, defender);
-        const isDefenderKO = result.defender.healPoints === 0;
+        const isDefenderKO = result.defender.currentHealPoints === 0;
 
         expect(isDefenderKO).toBe(OTK);
       });
     });
 
-    it('should aplly attacker damage to defender wiuthout modifiers', () => {
+    it('should aplly attacker damage to defender without modifiers', () => {
       const attacker = {
         name: 'test',
       };
@@ -77,7 +80,7 @@ describe('BattleService', () => {
           { ...defender } as Card, // create copy of defender
         );
 
-        expect(result.defender.healPoints).toBe(
+        expect(result.defender.currentHealPoints).toBe(
           defender.healPoints - attack.damage,
         );
       });
@@ -106,7 +109,7 @@ describe('BattleService', () => {
           { ...defender } as Card, // create copy of defender
         );
 
-        expect(result.defender.healPoints).toBe(
+        expect(result.defender.currentHealPoints).toBe(
           defender.healPoints - attack.damage * WEAKNESS_MULTIPLIER,
         );
       });
@@ -135,7 +138,7 @@ describe('BattleService', () => {
           { ...defender } as Card, // create copy of defender
         );
 
-        expect(result.defender.healPoints).toBe(
+        expect(result.defender.currentHealPoints).toBe(
           defender.healPoints - (attack.damage - RESIST_AMOUNT),
         );
       });
