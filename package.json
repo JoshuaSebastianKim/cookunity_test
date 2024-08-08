@@ -2,14 +2,23 @@
   "name": "cookunity_test",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "workspaces": [
     "apps/*"
   ],
-  "packageManager": "npm@10.7.0",
+  "prisma": {
+    "schema": "apps/backend/prisma/schema.prisma",
+    "seed": "ts-node --transpile-only apps/backend/prisma/seed.ts"
+  },
+  "packageManager": "yarn@1.22.19",
   "scripts": {
     "build": "turbo run build",
+    "db:migrate:deploy": "turbo run db:migrate:deploy",
+    "db:push": "turbo run db:push",
+    "db:seed": "turbo run db:seed",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "generate": "turbo run generate",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "author": "",

@@ -3,7 +3,14 @@
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "db:migrate:deploy": {},
+    "db:push": {},
+    "db:seed": {},
+    "generate": {
+      "dependsOn": ["^generate"]
     },
     "lint": {},
     "dev": {
