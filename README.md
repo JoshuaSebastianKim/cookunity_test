@@ -1,6 +1,6 @@
 # Cookunity challenge
 
-Cookunityt take home challenge. You can check a demo here: https://joshua-sebastian.kim/card-list
+Cookunity take home challenge. You can check a demo here: http://joshua-sebastian.kim/card-list
 Also can check Graphql playgound here http://joshua-sebastian.kim:8080/graphql
 
 ## Dependencies
