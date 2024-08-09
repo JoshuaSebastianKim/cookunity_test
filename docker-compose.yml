@@ -44,7 +44,6 @@ services:
     ports:
       - 3001:3001
       - 8080:3001
-      - 8443:3001
     networks:
       - app_network
     depends_on:
