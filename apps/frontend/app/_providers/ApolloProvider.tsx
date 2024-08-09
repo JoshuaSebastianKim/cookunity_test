@@ -10,6 +10,10 @@ import { setContext } from "@apollo/client/link/context";
 import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
 
+const httpLink = new HttpLink({
+  uri: `${window?.location.origin || "localhost"}:8443/graphql`,
+});
+
 export let session: Session | null;
 
 export default function ApolloProvider({
@@ -29,10 +33,6 @@ export default function ApolloProvider({
           authorization: `Bearer ${session?.auth_token}`,
         },
       };
-    });
-
-    const httpLink = new HttpLink({
-      uri: `${window ? window.location.origin : "localhost"}:8443/graphql`,
     });
 
     return new ApolloClient({
