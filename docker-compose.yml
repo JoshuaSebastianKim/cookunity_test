@@ -1,0 +1,59 @@
+services:
+  postgres:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=cookunity
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./apps/frontend/Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+    depends_on:
+      - backend
+    environment:
+      - DATABASE_URL=postgresql://postgres:1234@postgres:5432/cookunity?schema=public
+    env_file:
+      - .env
+
+  backend:
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./apps/backend/Dockerfile
+    restart: always
+    ports:
+      - 3001:3001
+    networks:
+      - app_network
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://postgres:1234@postgres:5432/cookunity?schema=public
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
