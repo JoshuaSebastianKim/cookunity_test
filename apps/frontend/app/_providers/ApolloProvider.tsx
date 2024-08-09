@@ -11,7 +11,7 @@ import { getSession } from "next-auth/react";
 import { Session } from "next-auth";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:3001/graphql",
+  uri: "http://localhost:8080/graphql",
 });
 
 export let session: Session | null;
