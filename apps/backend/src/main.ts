@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { cors: true });
+  const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
     .setTitle('Pokemon')
@@ -16,9 +16,12 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
-    allowedHeaders: '*',
-    origin: '*',
-    credentials: true,
+    origin: [
+      'http://localhost:3000',
+      'http://localhost',
+      'http://joshua-sebastian.kim',
+      'https://joshua-sebastian.kim',
+    ],
   });
   await app.listen(3001);
 }
